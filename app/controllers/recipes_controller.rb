@@ -12,8 +12,11 @@ class RecipesController < ApplicationController
                                                             :difficulty, :cook_time, :ingredients, 
                                                             :cook_method))
         
-        @recipe.save
-        redirect_to recipe_path(@recipe.id)
+        if @recipe.save
+            redirect_to recipe_path(@recipe.id)
+        else
+            render 'new'
+        end
     end
 
     def edit
@@ -22,10 +25,13 @@ class RecipesController < ApplicationController
 
     def update
         @recipe = Recipe.find(params[:id])
-        @recipe.update(params.require(:recipe).permit(:title, :recipe_type, :cuisine, 
+        
+        if @recipe.update(params.require(:recipe).permit(:title, :recipe_type, :cuisine, 
                                                     :difficulty, :cook_time, :ingredients, 
-                                                    :cook_method))
-                                                    
+                                                    :cook_method))                                            
         redirect_to recipe_path(@recipe.id)
+        else
+            render 'edit'
+        end
     end
 end
