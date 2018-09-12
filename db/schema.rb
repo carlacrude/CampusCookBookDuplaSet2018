@@ -12,7 +12,17 @@
 
 ActiveRecord::Schema.define(version: 2018_09_12_005635) do
 
-# Could not dump table "recipes" because of following StandardError
-#   Unknown type 'bolean' for column 'featured'
+  create_table "recipes", force: :cascade do |t|
+    t.string "title"
+    t.string "recipe_type"
+    t.string "cuisine"
+    t.string "difficulty"
+    t.integer "cook_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "ingredients"
+    t.text "cook_method"
+    t.boolean "featured"
+  end
 
 end
