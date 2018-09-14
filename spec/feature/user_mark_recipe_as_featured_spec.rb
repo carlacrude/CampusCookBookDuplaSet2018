@@ -10,7 +10,9 @@ feature 'user mark recipe as feature' do
 
     visit root_path
     click_on 'Bolo de cenoura'
-    click_on 'Marcar como destaque'
+    click_on 'Editar'
+    check 'Marcar como destaque'
+    click_on 'Enviar'
 
     expect(page).to have_content('Receita marcada como destaque com sucesso!')
     expect(page).to have_css("img[src*='star']")
@@ -37,13 +39,15 @@ feature 'user mark recipe as feature' do
     visit root_path
 
     expect(page).to have_css('h3', text: 'Receitas destaque')
-    within '#recipes-featured' do
+    within 'div#recipes-featured' do
       expect(page).to have_content(featured_recipe.title)
       expect(page).to have_css("img[src*='star']")
+      expect(page).not_to have_content(another_recipe.title)
     end
     expect(page).to have_css('h3', text: 'Outras receitas')
-    within '#other-recipes' do
+    within 'div#other-recipes' do
       expect(page).to have_content(another_recipe.title)
+      expect(page).not_to have_content(featured_recipe.title)
     end
   end
 end
